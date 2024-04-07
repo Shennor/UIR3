@@ -1,0 +1,126 @@
+{
+  "general": {
+    "font": "Times New Roman",
+    "font_size": 12,
+    "interval": 1.5,
+    "alignment": "justify",
+    "columns": false,
+    "italic_allowed": false,
+    "bold_allowed": false,
+    "underlined_allowed": false,
+    "double_space_allowed": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "images": {
+    "num_min": null,
+    "num_max": 10,
+    "width_max": 10,
+    "dpi_min": 100,
+    "color_allowed": false,
+    "links_required": true
+  },
+  "tables": {
+    "font_size": 12,
+    "alignment": "justify",
+    "width_max": null,
+    "links_required": true
+  },
+  "UDK": {
+    "required": true
+  },
+  "title": {
+    "font_size": 14,
+    "alignment": "center",
+    "max_length": null
+  },
+  "authors": {
+    "num_max": 3
+  },
+  "affiliation": {
+    "required": true,
+    "info": [
+      "for all",
+      "for one",
+      true,
+      true,
+      true,
+      false,
+      false
+    ]
+  },
+  "annotation": {
+    "required": true,
+    "columns": false,
+    "size_min": null,
+    "size_max": null,
+    "english": "duplicate"
+  },
+  "keywords": {
+    "required": true,
+    "num_min": 3,
+    "num_max": 5,
+    "english": "only"
+  },
+  "literature": {
+    "num_min": null,
+    "num_max": null,
+    "style": "ГОСТ",
+    "DOI_required": false,
+    "self-citation_part": 0.1,
+    "foreign_part_min": null,
+    "foreign_part_max": null,
+    "novelty_settings": [2015,5,null],
+    "antiquity_settings": [2000,null,5]
+  },
+  "financing": {
+    "required": false
+  },
+  "gratitude": {
+    "required": false
+  },
+  "introduction": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "purpose": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "materials_methods": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "results": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "significance": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "discussion": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "conclusion": {
+    "required": false,
+    "size_min": null,
+    "size_max": null
+  },
+  "authors_info": {
+    "required": false
+  },
+  "contribution": {
+    "required": false
+  },
+  "documents": {
+    "required": false
+  }
+}
