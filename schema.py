@@ -303,7 +303,8 @@ class RequirementsSchema(object):
                     "type": ["integer", "null"]
                 },
                 "english": {
-                    "type": ["string", "null"]
+                    "type": ["string", "null"],
+                    "enum": ["only", "no", "duplicate"]
                 }
             },
             "required": [
