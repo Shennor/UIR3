@@ -1,5 +1,7 @@
 __all__ = ['Validator']
 
+import re
+
 import jsonschema
 import logging
 import math
@@ -9,6 +11,7 @@ from docx import Document
 from docx.enum.section import WD_SECTION_START
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt, Cm
+from chardet import detect
 
 from wrapper import DocumentWrapper
 from schema import RequirementsSchema
@@ -61,6 +64,12 @@ class Validator(object):
                 "alignment": [],
                 "width_max": [],
                 "links_required": []
+            },
+            "keywords": {
+                "required": [],
+                "num_min": [],
+                "num_max": [],
+                "english": []
             }
         }
         self._warnings = {
@@ -415,6 +424,94 @@ class Validator(object):
         for i, table in enumerate(tables):
             self._check_table_font(table)
 
+    def _check_keywords_num(self, keywords):
+        if self._requirements["keywords"]["num_min"] is None \
+                or self._requirements["keywords"]["num_max"] is None:
+            return
+        if not self._requirements["keywords"]["num_min"] is None \
+                and not self._requirements["keywords"]["num_max"] is None \
+                and self._requirements["keywords"]["num_min"] > self._requirements["keywords"]["num_max"]:
+            self._errors["requirements"].append(f"Minimal keywords number {self._requirements['keywords']['num_min']} "
+                                                f"is bigger than maximal number "
+                                                f"{self._requirements['keywords']['num_max']}")
+            return
+        cnt = len(keywords)
+        if self._requirements["keywords"]["english"] == "duplicate":
+            cnt /= 2.0
+        if not self._requirements['keywords']['num_min'] is None:
+            if cnt < self._requirements['keywords']['num_min']:
+                self._errors['keywords']['num_min'].append({"num_min": self._requirements['keywords']['num_min'],
+                                                            "found": cnt
+                                                            })
+        if not self._requirements['keywords']['num_max'] is None:
+            if cnt > self._requirements['keywords']['num_max']:
+                self._errors['keywords']['num_max'].append({"num_max": self._requirements['keywords']['num_max'],
+                                                            "found": cnt
+                                                            })
+
+    def _check_keywords_lang(self, keywords):
+        if self._requirements["keywords"]["english"] == "only":
+            for i, w in enumerate(keywords):
+                lang = detect(w.encode('cp1251'))["language"]
+                if lang == "Russian":
+                    self._errors["keywords"]["english"].append({
+                        "english": self._requirements["keywords"]["english"],
+                        "found": w
+                    })
+                    break
+        elif self._requirements["keywords"]["english"] == "no":
+            for i, w in enumerate(keywords):
+                if not re.match(r"[A-Za-z]+", w) is None:
+                    self._errors["keywords"]["english"].append({
+                        "english": self._requirements["keywords"]["english"],
+                        "found": w
+                    })
+                    break
+        elif self._requirements["keywords"]["english"] == "duplicate":
+            eng_num = 0
+            rus_num = 0
+            for i, w in enumerate(keywords):
+                lang = detect(w.encode('cp1251'))["language"]
+                print(w, lang)
+                if lang == "Russian":
+                    rus_num += 1
+                else:
+                    eng_num += 1
+            if not eng_num == rus_num:
+                self._errors["keywords"]["english"].append({
+                    "english": self._requirements["keywords"]["english"],
+                    "eng_num": eng_num,
+                    "rus_num": rus_num
+                })
+
+    def validate_keywords(self):
+        words = []
+        k = 0
+        for i, paragraph in enumerate(self._docx.iter_paragraphs()):
+            if "ключевые слова" in paragraph.text.lower() \
+                    or "keywords" in paragraph.text.lower():
+                if k >= 2:
+                    break
+                k += 1
+                i = paragraph.text.lower().find("слова")
+                if i == -1:
+                    i = paragraph.text.lower().find("keywords")
+                    i += 9
+                else:
+                    i += 5
+                words.extend(list(filter(lambda x: not x == "",
+                                         [re.sub(r'[^A-Za-zА-Яа-я]+', '', s) for s
+                                          in re.split(r'[,;]', paragraph.text.lower()[i:])])))
+        # print(words)
+        if len(words) == 0:
+            if self._requirements["keywords"]["required"]:
+                self._errors["keywords"]["required"].append({"required": self._requirements['keywords']['required'],
+                                                             "found": False
+                                                             })
+                return
+        self._check_keywords_num(words)
+        self._check_keywords_lang(words)
+
     def result(self):
         if self._make_changes:
             grayscale_image_num = self._docx.save_as("out/result.docx")
@@ -426,3 +523,4 @@ class Validator(object):
         self.validate_general_requirements()
         self.validate_images_requirements()
         self.validate_tables_requirements()
+        self.validate_keywords()

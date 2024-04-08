@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22226548-e0e1-4e59-83a6-981f72f90b1f" name="Changes" comment="added requirements.py and validator.py">
-      <change afterPath="$PROJECT_DIR$/example_req.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wrapper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="22226548-e0e1-4e59-83a6-981f72f90b1f" name="Changes" comment="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.py" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example_req.json" beforeDir="false" afterPath="$PROJECT_DIR$/example_req.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/validator.py" beforeDir="false" afterPath="$PROJECT_DIR$/validator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,12 +92,30 @@
       <option name="project" value="LOCAL" />
       <updated>1711479597090</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="completed check for &quot;images&quot; and &quot;general&quot; (except &quot;columns&quot;)">
+      <option name="closed" value="true" />
+      <created>1712529012380</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712529012380</updated>
+    </task>
+    <task id="LOCAL-00004" summary="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)">
+      <option name="closed" value="true" />
+      <created>1712530477385</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712530477385</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="added requirements.py and validator.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="added requirements.py and validator.py" />
+    <MESSAGE value="completed check for &quot;images&quot; and &quot;general&quot; (except &quot;columns&quot;)" />
+    <MESSAGE value="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)" />
+    <option name="LAST_COMMIT_MESSAGE" value="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)" />
   </component>
 </project>
