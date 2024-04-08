@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22226548-e0e1-4e59-83a6-981f72f90b1f" name="Changes" comment="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)">
+    <list default="true" id="22226548-e0e1-4e59-83a6-981f72f90b1f" name="Changes" comment="&quot;keywords&quot; validation added fully">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example_req.json" beforeDir="false" afterPath="$PROJECT_DIR$/example_req.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/validator.py" beforeDir="false" afterPath="$PROJECT_DIR$/validator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,19 +48,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.main.executor": "Run",
-    "Python.requirements.executor": "Run",
-    "Python.schema.executor": "Run",
-    "Python.validator.executor": "Run",
-    "Python.wrapper.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.requirements.executor&quot;: &quot;Run&quot;,
+    &quot;Python.schema.executor&quot;: &quot;Run&quot;,
+    &quot;Python.validator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.wrapper.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -108,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712530477385</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="&quot;keywords&quot; validation added fully">
+      <option name="closed" value="true" />
+      <created>1712536710171</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712536710171</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -116,6 +125,7 @@
     <MESSAGE value="added requirements.py and validator.py" />
     <MESSAGE value="completed check for &quot;images&quot; and &quot;general&quot; (except &quot;columns&quot;)" />
     <MESSAGE value="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)" />
-    <option name="LAST_COMMIT_MESSAGE" value="some changes on schema.py (enum added to &quot;keywords&quot; &quot;english&quot;)" />
+    <MESSAGE value="&quot;keywords&quot; validation added fully" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;keywords&quot; validation added fully" />
   </component>
 </project>

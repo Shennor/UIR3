@@ -9,7 +9,7 @@ class RequirementsSchema(object):
                 "general": self.general_schema,
                 "images": self.images_schema,
                 "tables": self.tables_schema,
-                "UDK": {
+                "UDC": {
                     "type": "object",
                     "properties": {
                         "required": {
@@ -43,7 +43,7 @@ class RequirementsSchema(object):
                 "general",
                 "images",
                 "tables",
-                "UDK",
+                "UDC",
                 "title",
                 "authors",
                 "affiliation",

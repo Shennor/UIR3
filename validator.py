@@ -70,7 +70,8 @@ class Validator(object):
                 "num_min": [],
                 "num_max": [],
                 "english": []
-            }
+            },
+            "UDC": []
         }
         self._warnings = {
             "images": {
@@ -472,7 +473,7 @@ class Validator(object):
             rus_num = 0
             for i, w in enumerate(keywords):
                 lang = detect(w.encode('cp1251'))["language"]
-                print(w, lang)
+                # print(w, lang)
                 if lang == "Russian":
                     rus_num += 1
                 else:
@@ -512,6 +513,51 @@ class Validator(object):
         self._check_keywords_num(words)
         self._check_keywords_lang(words)
 
+    def validate_udc(self):
+        if not self._requirements["UDC"]["required"]:
+            return
+        found_udc = False
+        see_next = False
+        i = 0
+        for j, paragraph in enumerate(self._docx.iter_paragraphs()):
+            if "УДК" in paragraph.text:
+                # print(1)
+                i = paragraph.text.find(" ", paragraph.text.find("УДК"))
+                if i is None:
+                    see_next = True
+            elif see_next:
+                # print(2)
+                i = 0
+                """
+                i = paragraph.text.find(" ")
+                if i is None:
+                    see_next = False
+                """
+            else:
+                # print(3)
+                i = 0
+            if ("УДК" in paragraph.text or see_next) and i is not None:
+                # print(f"i = {i}")
+                # print(paragraph.text[i:])
+                udc = re.findall(r'[0-9]+[0-9.+*:/\\\[\]]*[A-Z]*', paragraph.text[i:])
+                # print(udc)
+                if len(udc) == 1:
+                    found_udc = True
+                    self._log.append(f"Found UDC {udc[0]} in paragraph {j}")
+                elif len(udc) > 0:
+                    self._log.append(f"Found multiple matches for UDC: {udc} in paragraph {j}")
+                elif not see_next:
+                    see_next = True
+                elif see_next:
+                    see_next = False
+            if found_udc:
+                break
+        if not found_udc:
+            self._errors["UDC"].append("UDC not found but required")
+
+    def validate_literature(self):
+        pass
+
     def result(self):
         if self._make_changes:
             grayscale_image_num = self._docx.save_as("out/result.docx")
@@ -524,3 +570,4 @@ class Validator(object):
         self.validate_images_requirements()
         self.validate_tables_requirements()
         self.validate_keywords()
+        self.validate_udc()

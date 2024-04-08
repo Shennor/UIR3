@@ -26,7 +26,7 @@
     "width_max": null,
     "links_required": true
   },
-  "UDK": {
+  "UDC": {
     "required": true
   },
   "title": {
@@ -58,15 +58,15 @@
   },
   "keywords": {
     "required": true,
-    "num_min": 3,
+    "num_min": 4,
     "num_max": 6,
     "english": "duplicate"
   },
   "literature": {
-    "num_min": null,
-    "num_max": null,
+    "num_min": 10,
+    "num_max": 20,
     "style": "ГОСТ",
-    "DOI_required": false,
+    "DOI_required": true,
     "self-citation_part": 0.1,
     "foreign_part_min": null,
     "foreign_part_max": null,
