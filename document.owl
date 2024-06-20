@@ -1,0 +1,736 @@
+<!DOCTYPE owl [
+    <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl  "http://www.w3.org/2002/07/owl#" > ]>
+<rdf:RDF 
+    xmlns          ="file://#"
+    xmlns:xsd      ="http://www.w3.org/2001/XMLSchema#"
+    xmlns:document ="file://document#"
+    xmlns:owl      ="http://www.w3.org/2002/07/owl#"
+    xmlns:rdf      ="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs     ="http://www.w3.org/2000/01/rdf-schema#"
+> 
+  
+  <owl:Ontology rdf:about="document">
+    <rdfs:comment>An OWL ontology for document requirements</rdfs:comment>
+    <owl:priorVersion rdf:resource=""/> 
+    <owl:imports rdf:resource=""/> 
+    <rdfs:label>Document Requirements Ontology</rdfs:label> 
+  </owl:Ontology> 
+
+
+  <owl:Class rdf:about="document#Property">
+  </owl:Class>
+
+
+  <owl:Class rdf:about="document#QuantitativeProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+  <owl:Class rdf:about="document#LabeledProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+  <owl:Class rdf:about="document#PermissionProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+  <owl:Class rdf:about="document#MinProperty">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeProperty" />
+  </owl:Class>
+  <owl:Class rdf:about="document#MaxProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+  <owl:Class rdf:about="document#TopicProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+
+
+  <owl:Class rdf:about="document#DecorationProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+  
+  <owl:Class rdf:about="document#FontProperty">
+    <rdfs:subClassOf rdf:resource="document#DecorationProperty" />
+  </owl:Class>
+  <owl:Class rdf:about="document#ParagraphProperty">
+    <rdfs:subClassOf rdf:resource="document#DecorationProperty" />
+  </owl:Class>
+  <owl:Class rdf:about="document#PageProperty">
+    <rdfs:subClassOf rdf:resource="document#DecorationProperty" />
+  </owl:Class>
+  <owl:Class rdf:about="document#TableDecorationProperty">
+    <rdfs:subClassOf rdf:resource="document#DecorationProperty" />
+  </owl:Class>
+  <owl:Class rdf:about="document#ImageDecorationProperty">
+    <rdfs:subClassOf rdf:resource="document#DecorationProperty" />
+  </owl:Class>
+
+
+  <owl:NamedIndividual rdf:about="document#FontNameProperty">
+	<rdfs:label>шрифт</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontSizeProperty">
+	<rdfs:label>размер{\S}* шрифт</rdfs:label>
+	<rdfs:label>шрифт[\w]* [\w\s,]*размер</rdfs:label>
+    <rdfs:label>шрифт</rdfs:label>
+    <rdfs:label>№</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontBoldProperty">
+	<rdfs:label>(полу)*жирн</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontItalicProperty">
+	<rdfs:label>курсив</rdfs:label>
+	<rdfs:label>с наклон</rdfs:label>
+	<rdfs:label>италик</rdfs:label>
+	<rdfs:label>(на|с)клон(е|ё)?н</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontUnderlinedProperty">
+	<rdfs:label>подчерк</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontCrossedProperty">
+	<rdfs:label>(за|пере)черкнут</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontColorProperty">
+	<rdfs:label>([\w]*цвет[\w]* |окра(с|ш)[\w]* |текст[\w]* ){2}</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontSelectionColorProperty">
+	<rdfs:label>([\w]*цвет[\w]* |окра(с|ш)[\w]* |выдел[\w]* текст[\w]* |выдел[\w]* текст[\w]*){2+}</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#FontAlignmentProperty">
+	<rdfs:label>( выравниван| выровн| распределен)</rdfs:label>
+	<rdf:type rdf:resource="document#FontProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:NamedIndividual rdf:about="document#ParagraphIntervalProperty">
+	<rdfs:label>интервал</rdfs:label>
+	<rdf:type rdf:resource="document#ParagraphProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#ParagraphIndentProperty">
+	<rdfs:label>(отступ|абзац)</rdfs:label>
+	<rdf:type rdf:resource="document#ParagraphProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#ParagraphFieldLeftProperty">
+	<rdfs:label>лев[\w]*[\s]*</rdfs:label>
+	<rdf:type rdf:resource="document#ParagraphProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#ParagraphFieldRightProperty">
+	<rdfs:label>прав[\w][\s]*</rdfs:label>
+	<rdf:type rdf:resource="document#ParagraphProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#ParagraphFieldTopProperty">
+	<rdfs:label>верх[\w][\s]*</rdfs:label>
+	<rdf:type rdf:resource="document#ParagraphProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#ParagraphFieldBottomProperty">
+	<rdfs:label>ни(з|ж)[\w][\s]*</rdfs:label>
+	<rdf:type rdf:resource="document#ParagraphProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:NamedIndividual rdf:about="document#PageColumnsProperty">
+	<rdfs:label>колон</rdfs:label>
+	<rdf:type rdf:resource="document#PageProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#PageOrientationProperty">
+	<rdfs:label>(ориентаци|альбомн|книжн)</rdfs:label>
+	<rdf:type rdf:resource="document#PageProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#PageSizeProperty">
+	<rdfs:label>размер (лист|страниц)</rdfs:label>
+	<rdfs:label>формат</rdfs:label>
+	<rdf:type rdf:resource="document#PageProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:NamedIndividual rdf:about="document#TablesFontNameProperty">
+	<rdfs:label>шрифт[\w]* табли</rdfs:label>
+	<rdfs:label>табли[\w]+ шрифт</rdfs:label>
+	<rdf:type rdf:resource="document#TableDecorationProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#TablesFontSizeProperty">
+	<rdfs:label>шрифт[\w]* табли</rdfs:label>
+	<rdfs:label>табли[\w]+ шрифт</rdfs:label>
+	<rdf:type rdf:resource="document#TableDecorationProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#TablesWidthProperty">
+	<rdfs:label>(ширин[\w]*|разме[\w]*) табл</rdfs:label>
+	<rdfs:label>табл[\w]+ (ширин[\w]*|разме[\w]*)</rdfs:label>
+	<rdf:type rdf:resource="document#TableDecorationProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:NamedIndividual rdf:about="document#ImageWidthProperty">
+	<rdfs:label>(ширин[\w]*|разме[\w]*) (картин|илл(юстрац)?|рис)</rdfs:label>
+	<rdf:type rdf:resource="document#ImageDecorationProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#ImageChromaticityProperty">
+	<rdfs:label>цвет\S* (картин|илл(юстрац)?|рис(унк)?|изображен)</rdfs:label>
+	<rdfs:label>(картин|илл(юстрац)?|рис(унк)?|изображен)</rdfs:label>
+	<rdf:type rdf:resource="document#ImageDecorationProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:Class rdf:about="document#StructureProperty">
+    <rdfs:subClassOf rdf:resource="Property" />
+  </owl:Class>
+
+  <owl:Class rdf:about="document#EnumValue">
+    <rdfs:subClassOf rdf:resource="document#Value" />
+  </owl:Class>
+
+  <owl:NamedIndividual rdf:about="document#SectionExistanceProperty">
+	<rdf:type rdf:resource="document#StructureProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+	<rdfs:label>(включа(ет/ять)|содерж(ать|ит)) раздел</rdfs:label>
+	<rdfs:label>состо(ять/ит) из</rdfs:label>
+	<rdfs:label>в раздел</rdfs:label>
+	<rdfs:label>част</rdfs:label>
+	<rdfs:label>рубрик</rdfs:label>
+	<rdfs:label></rdfs:label>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="document#MaxHeaderNestingProperty">
+	<rdf:type rdf:resource="document#StructureProperty"/>
+	<rdf:type rdf:resource="document#MaxProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MaxListNestingProperty">
+	<rdf:type rdf:resource="document#StructureProperty"/>
+	<rdf:type rdf:resource="document#MaxProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#NumerationProperty">
+	<rdf:type rdf:resource="document#StructureProperty"/>
+	<rdf:type rdf:resource="document#LabeledProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:Class rdf:about="ContentProperty">
+    <rdfs:subClassOf rdf:resource="Property" />
+  </owl:Class>
+
+
+  <owl:NamedIndividual rdf:about="document#TopicMatchingProperty">
+	<rdfs:label>(раскрыт|поднят|затронут|коснут|касает)[\w]* (тем|вопрос|информац|проблем)</rdfs:label>
+	<rdf:type rdf:resource="document#ContentProperty"/>
+	<rdf:type rdf:resource="document#TopicProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#AbbreviationProperty">
+	<rdfs:label>аббревиатур</rdfs:label>
+	<rdfs:label>сокращ</rdfs:label>
+	<rdfs:label>акроним</rdfs:label>
+	<rdf:type rdf:resource="document#ContentProperty"/>
+	<rdf:type rdf:resource="document#PermissionProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:Class rdf:about="document#VolumeProperty">
+    <rdfs:subClassOf rdf:resource="document#Property" />
+  </owl:Class>
+
+
+  <owl:NamedIndividual rdf:about="document#MinTextVolumeProperty">
+	<rdfs:label>(объем|размер|величин)[\w]*([\w]*[\s])*(текст|документ|стат|отч(е|ё)т)</rdfs:label>
+	<rdfs:label>(текст|документ|стат|отч(е|ё)т)[\w]*([\w]*[\s])*(текст|документ|стат|отч(е|ё)т)</rdfs:label>
+	<rdf:type rdf:resource="document#VolumeProperty"/>
+	<rdf:type rdf:resource="document#MinProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MaxTextVolumeProperty">
+	<rdfs:label>(объем|размер|величин)[\w]*([\w]*[\s])*(текст|документ|стат|отч(е|ё)т)</rdfs:label>
+	<rdfs:label>(текст|документ|стат|отч(е|ё)т)[\w]*([\w]*[\s])*(текст|документ|стат|отч(е|ё)т)</rdfs:label>
+	<rdf:type rdf:resource="document#VolumeProperty"/>
+	<rdf:type rdf:resource="document#MaxProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MinImagesProperty">
+	<rdfs:label>(объем|размер|величин|количеств|числ)[\w]*([\w]*[\s])*(иллюстр|картин|рисун)</rdfs:label>
+	<rdfs:label>(иллюстр|картин|рисун)[\w]*([\w]*[\s])*(объем|размер|величин|количеств|числ)</rdfs:label>
+	<rdf:type rdf:resource="document#VolumeProperty"/>
+	<rdf:type rdf:resource="document#MinProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MaxImagesProperty">
+	<rdfs:label>(объем|размер|величин|количеств|числ)[\w]*([\w]*[\s])*(иллюстр|картин|рисун)</rdfs:label>
+	<rdfs:label>(иллюстр|картин|рисун)[\w]*([\w]*[\s])*(объем|размер|величин|количеств|числ)</rdfs:label>
+	<rdf:type rdf:resource="document#VolumeProperty"/>
+	<rdf:type rdf:resource="document#MaxProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MinTablesProperty">
+	<rdfs:label>(объем|размер|величин|количеств|числ)[\w]*([\w]*[\s])*(табл)</rdfs:label>
+	<rdfs:label>(табл)[\w]*([\w]*[\s])*(объем|размер|величин|количеств|числ)</rdfs:label>
+	<rdf:type rdf:resource="document#VolumeProperty"/>
+	<rdf:type rdf:resource="document#MinProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MaxTablesProperty">
+	<rdfs:label>(объем|размер|величин|количеств|числ)[\w]*([\w]*[\s])*(табл)</rdfs:label>
+	<rdfs:label>(табл)[\w]*([\w]*[\s])*(объем|размер|величин|количеств|числ)</rdfs:label>
+	<rdf:type rdf:resource="document#VolumeProperty"/>
+	<rdf:type rdf:resource="document#MaxProperty"/>
+	<rdf:type rdf:resource="document#QuantitativeProperty"/>
+  </owl:NamedIndividual>
+
+
+  <owl:Class rdf:about="document#Value">
+  </owl:Class>
+
+
+  <owl:ObjectProperty rdf:about="document#applicableTo">
+    <rdfs:domain rdf:resource="document#Value" />
+	<rdfs:range  rdf:resource="document#Property" />
+  </owl:ObjectProperty>
+
+
+
+  <owl:NamedIndividual rdf:about="document#TimesNewRoman">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontNameProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesFontNameProperty"/>
+    </document:applicableTo>
+    <rdfs:label>times new roman</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Arial">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontNameProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesFontNameProperty"/>
+    </document:applicableTo>
+    <rdfs:label>arial</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#CourierNew">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontNameProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesFontNameProperty"/>
+    </document:applicableTo>
+    <rdfs:label>courier new</rdfs:label>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="document#LeftAlignment">
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontAlignmentProperty"/>
+    </document:applicableTo>
+    <rdfs:label> (на|в|по )лево(му)?</rdfs:label>
+    <rdf:type rdf:resource="document#EnumValue"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#RightAlignment">
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontAlignmentProperty"/>
+    </document:applicableTo>
+    <rdfs:label> (на|в|по )право(му)?</rdfs:label>
+    <rdf:type rdf:resource="document#EnumValue"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#CentralAlignment">
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontAlignmentProperty"/>
+    </document:applicableTo>
+    <rdfs:label> (в |по )?центр(у)?</rdfs:label>
+    <rdf:type rdf:resource="document#EnumValue"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#JustifyAlignment">
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontAlignmentProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(в|по )ширин</rdfs:label>
+    <rdf:type rdf:resource="document#EnumValue"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="document#Portrait">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageOrientationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>книжн</rdfs:label>
+    <rdfs:label>вертикал</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Landscape">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageOrientationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>альбомн</rdfs:label>
+    <rdfs:label>горизонт</rdfs:label>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="document#A4">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageSizeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>a4</rdfs:label>
+    <rdfs:label>а4</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#A3">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageSizeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>a3</rdfs:label>
+    <rdfs:label>а3</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#A2">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageSizeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>a2</rdfs:label>
+    <rdfs:label>а2</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#A1">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageSizeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>a1</rdfs:label>
+    <rdfs:label>а1</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Letter">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageSizeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>letter</rdfs:label>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="document#Arabic">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#NumerationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>арабск</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Roman">
+    <rdf:type rdf:resource="document#EnumValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#NumerationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>римск</rdfs:label>
+  </owl:NamedIndividual>
+
+
+  <owl:Class rdf:about="document#QuantitativeValue">
+    <rdfs:subClassOf rdf:resource="document#Value" />
+  </owl:Class>
+  <owl:Class rdf:about="document#MinValue">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue" />
+  </owl:Class>
+  <owl:Class rdf:about="document#MaxValue">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue" />
+  </owl:Class>
+
+  <owl:Class rdf:about="document#MinNumber">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <rdfs:subClassOf rdf:resource="document#MinValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MinImagesProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MinTablesProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(количеств|штук|шт|раз)</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#MaxNumber">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <rdfs:subClassOf rdf:resource="document#MaxValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MaxImagesProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MaxTablesProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MaxHeaderNestingProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MaxListNestingProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(количеств|штук|шт|раз)</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#MinTextVolume">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <rdfs:subClassOf rdf:resource="document#MinValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MinTextVolumeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(симв[\w]* без( [\w]+)* пробел|сбп)</rdfs:label>
+    <rdfs:label>(симв[\w]* c( [\w]+)* пробел|сcп)</rdfs:label>
+    <rdfs:label>(страниц|( |[\d])стр.|( |[\d])с.)</rdfs:label>
+    <rdfs:label>слов</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#MaxTextVolume">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <rdfs:subClassOf rdf:resource="document#MaxValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#MaxTextVolumeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(симв[\w]* без( [\w]+)* пробел|сбп)</rdfs:label>
+    <rdfs:label>(симв[\w]* c( [\w]+)* пробел|сcп)</rdfs:label>
+    <rdfs:label>(страниц|( |[\d])стр.|( |[\d])с.)</rdfs:label>
+    <rdfs:label>слов</rdfs:label>
+  </owl:Class>
+
+  <owl:Class rdf:about="document#FontSize">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontSizeProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesFontSizeProperty"/>
+    </document:applicableTo>
+    <rdfs:label>кегл</rdfs:label>
+    <rdfs:label>кегел</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#Pt">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontSizeProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesFontSizeProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphIntervalProperty"/>
+    </document:applicableTo>
+    <rdfs:label>pt</rdfs:label>
+    <rdfs:label>пт</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#Number">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphIntervalProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#PageColumnsProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(количеств|штук|шт|раз)</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#Pixels">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ImageWidthProperty"/>
+    </document:applicableTo>
+    <rdfs:label>px</rdfs:label>
+    <rdfs:label>пиксел</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#LinearSizeSm">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphIndentProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldLeftProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldRightProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldTopProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldBottomProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesWidthProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ImageWidthProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(см|сантиметр)</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#LinearSizeMm">
+    <rdfs:subClassOf rdf:resource="document#QuantitativeValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphIndentProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldLeftProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldRightProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldTopProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ParagraphFieldBottomProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#TablesWidthProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ImageWidthProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(мм|миллиметр)</rdfs:label>
+  </owl:Class>
+
+
+  <owl:Class rdf:about="document#PermissionValue">
+    <rdfs:subClassOf rdf:resource="document#Value" />
+  </owl:Class>
+
+  <owl:Class rdf:about="document#Allowed">
+  <rdfs:subClassOf rdf:resource="document#PermissionValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontBoldProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontItalicProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontUnderlinedProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontCrossedProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ImageChromaticityProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#AbbreviationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>(?!не)/s*разреш(е|ё)н</rdfs:label>
+    <rdfs:label>без/s*запрет</rdfs:label>
+    <rdfs:label>не/s*запрещ</rdfs:label>
+    <rdfs:label>можно</rdfs:label>
+    <rdfs:label>допуск</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#Forbidden">
+  <rdfs:subClassOf rdf:resource="document#PermissionValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontBoldProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontItalicProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontUnderlinedProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#FontCrossedProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#ImageChromaticityProperty"/>
+    </document:applicableTo>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#AbbreviationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>не/s*разреш(е|ё)н</rdfs:label>
+    <rdfs:label> (?!без)/s*запрет </rdfs:label>
+    <rdfs:label> (?!не)/s*запрещ </rdfs:label>
+    <rdfs:label> нельзя </rdfs:label>
+    <rdfs:label> не/S*/s*((воз)?можн|допустим) </rdfs:label>
+    <rdfs:label> не </rdfs:label>
+    <rdfs:label>черно-бел</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="document#DecodingNeeded">
+  <rdfs:subClassOf rdf:resource="document#PermissionValue"/>
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#AbbreviationProperty"/>
+    </document:applicableTo>
+    <rdfs:label>расшифров</rdfs:label>
+    <rdfs:label>поясн</rdfs:label>
+    <rdfs:label>определ</rdfs:label>
+  </owl:Class>
+
+  <owl:NamedIndividual rdf:about="document#Introduction">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>введение</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Purpose">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>цел(ь|и)</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#MaterialsMethods">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>материалы и методы</rdfs:label>
+    <rdfs:label>методы</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Results">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>результаты</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Discussion">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>обсуждение</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Conclusions">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>выводы</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Thankfullness">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>благодарности</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Literature">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>список литературы</rdfs:label>
+    <rdfs:label>списка литератур</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="document#Reviwing">
+    <rdf:type rdf:resource="document#EnumValue" />
+    <document:applicableTo>
+        <owl:NamedIndividual rdf:about="document#SectionExistanceProperty"/>
+    </document:applicableTo>
+    <rdfs:label>рецензировани</rdfs:label>
+  </owl:NamedIndividual>
+</rdf:RDF> 
