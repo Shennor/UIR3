@@ -1,39 +1,28 @@
-import os
-import subprocess
-
-from requirements import Requirements
-from validator import Validator
+from validator import DesignValidator
 from wrapper import DocumentWrapper
 import json
 
-r = Requirements("30 Digital Diagnostics.docx")
-p = r.get_all_paragraphs()
-# print(r.get_min_max_image_count())
+from ontospy.gendocs.viz.viz_html_single import *
 
 home = "C:/Users/megera/Documents/UIR3/"
-path = "in/result.docx"
+path = "in/1.docx"
 print(os.access(path, os.R_OK))
 print(os.access(path, os.W_OK))
-# os.chown(path, "megera", )
 wrapper = DocumentWrapper(path)
-'''
-for i, section in enumerate(wrapper.iter_sections()):
-    print(wrapper.get_section_attributes(section))
-
-'''
-print("=====================================================================================")
-# for i, paragraph in enumerate(wrapper.iter_paragraphs()):
-    # print(wrapper.get_paragraph_attributes(paragraph))
-    # print(paragraph)
-    # print(wrapper.get_font_attributes(paragraph))
-# validate("in/30 Digital Diagnostics.docx", "example_req.json")
 
 requirements = json.load(open('example_req.json', "r"))
-
-validator = Validator(wrapper, requirements)
+validator = DesignValidator(wrapper, requirements)
 validator.validate()
-errors, log, warnings = validator.result()
-print(errors)
-print(log)
-print(warnings)
+errors, log, warnings, errors_list = validator.result()
+print("Errors:")
+for i, s in enumerate(errors_list):
+    print(i, s)
+with open("errors.json", "w") as f:
+    json.dump(errors, f)
+print("Log:")
+for i, s in enumerate(log):
+    print(i, s)
+with open("warnings.json", "w") as f:
+    json.dump(warnings, f)
+
 

@@ -4,34 +4,34 @@
     "font_size": 12,
     "interval": 1.5,
     "alignment": "justify",
-    "columns": false,
-    "italic_allowed": false,
-    "bold_allowed": false,
-    "underlined_allowed": false,
-    "double_space_allowed": false,
-    "size_min": null,
-    "size_max": null
+    "columns": 1,
+    "italic_allowed": true,
+    "bold_allowed": true,
+    "underlined_allowed": true,
+    "double_space_allowed": true,
+    "size_min": 1000,
+    "size_max": 10000
   },
   "images": {
     "num_min": null,
-    "num_max": 10,
+    "num_max": 1,
     "width_max": 10,
     "dpi_min": 100,
     "color_allowed": false,
-    "links_required": true
+    "links_required": false
   },
   "tables": {
     "font_size": 12,
     "alignment": "justify",
     "width_max": null,
-    "links_required": true
+    "links_required": false
   },
   "UDC": {
-    "required": true
+    "required": false
   },
   "title": {
     "font_size": 14,
-    "alignment": "center",
+    "alignment": "left",
     "max_length": null
   },
   "authors": {

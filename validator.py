@@ -1,25 +1,15 @@
-__all__ = ['Validator']
+__all__ = ['DesignValidator']
 
 import re
-
 import jsonschema
-import logging
-import math
-import docx
-
-from docx import Document
 from docx.enum.section import WD_SECTION_START
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt, Cm
 from chardet import detect
-
-from wrapper import DocumentWrapper
 from schema import RequirementsSchema
 
-logger = logging.getLogger(__name__)
 
-
-class Validator(object):
+class DesignValidator(object):
     """Class for validating docx document."""
 
     def __init__(self, wrapper, requirements):
@@ -27,6 +17,8 @@ class Validator(object):
         :param wrapper: Wrapper
         :param requirements: json
         """
+        # requirements - JSON
+        # requirements_schema returns schema
         try:
             jsonschema.validate(instance=requirements, schema=RequirementsSchema().requirements_schema)
         except jsonschema.exceptions.ValidationError as err:
@@ -78,6 +70,8 @@ class Validator(object):
                 "links": []
             }
         }
+        self.errors_list = []
+        self.warnings_list = []
 
     def _check_font(self, paragraph, p_i=None):
         if self._requirements['general']['font'] is None and \
@@ -95,6 +89,7 @@ class Validator(object):
                 size_ok = True
                 if self._requirements['general']['font'] is not None and \
                         name != self._requirements['general']['font'] and name_ok:
+                    self.errors_list.append(f"FontName: paragraph {p_i}, expected {self._requirements['general']['font']}, found {name}")
                     self._errors['general']['font'].append({"paragraph": p_i,
                                                             "expected": self._requirements['general']['font'],
                                                             "found": name
@@ -102,6 +97,7 @@ class Validator(object):
                     name_ok = False
                 if self._requirements['general']['font_size'] is not None and \
                         size != self._requirements['general']['font_size'] and size_ok:
+                    self.errors_list.append(f"Font Size: paragraph {p_i}, expected {self._requirements['general']['font_size']}, found {size}")
                     self._errors['general']['font_size'].append({"paragraph": p_i,
                                                                  "expected": self._requirements['general']['font_size'],
                                                                  "found": size
@@ -112,6 +108,7 @@ class Validator(object):
             else:
                 if self._requirements['general']['font'] is not None and \
                         name != self._requirements['general']['font']:
+                    self.errors_list.append(f"FontName: paragraph {p_i}, expected {self._requirements['general']['font']}, found {name}")
                     self._errors['general']['font'].append({"paragraph": p_i,
                                                             "expected": self._requirements['general']['font'],
                                                             "found": name
@@ -125,6 +122,7 @@ class Validator(object):
                                          f"is out of normal {['Times New Roman', 'Arial', 'Cambria', 'Calibri']}")
                 if self._requirements['general']['font_size'] is not None and \
                         size != self._requirements['general']['font_size']:
+                    self.errors_list.append(f"Font Size: paragraph {p_i}, expected {self._requirements['general']['font_size']}, found {size}")
                     self._errors['general']['font_size'].append({"paragraph": p_i,
                                                                  "expected": self._requirements['general']['font_size'],
                                                                  "found": size
@@ -150,6 +148,8 @@ class Validator(object):
         """
         interval = paragraph.paragraph_format.line_spacing
         if interval != self._requirements['general']['interval']:
+            self.errors_list.append(
+                f"Interval: paragraph {p_i}, expected {self._requirements['general']['interval']}, found {interval}")
             self._errors['general']['interval'].append({"paragraph": p_i,
                                                         "expected": self._requirements['general']['interval'],
                                                         "found": interval
@@ -171,6 +171,8 @@ class Validator(object):
         """
         alignment = paragraph.paragraph_format.alignment
         if not self._requirements['general']['alignment'].lower() in str(alignment).lower():
+            self.errors_list.append(
+                f"Alignment: paragraph {p_i}, expected {self._requirements['general']['alignment']}, found {alignment}")
             self._errors['general']['alignment'].append({"paragraph": p_i,
                                                          "expected": self._requirements['general']['alignment'],
                                                          "found": alignment
@@ -206,6 +208,8 @@ class Validator(object):
         underlined_changes = 0
         for j, run in enumerate(paragraph.runs):
             if run.italic and not self._requirements['general']['italic_allowed']:
+                self.errors_list.append(
+                f"Italic Allowed: paragraph {p_i}, expected {self._requirements['general']['italic_allowed']}, found True")
                 self._errors['general']['italic_allowed'].append({"paragraph": p_i,
                                                                   "run": j,
                                                                   "expected": self._requirements['general'][
@@ -216,6 +220,8 @@ class Validator(object):
                     run.italic = False
                     italic_changes += 1
             if run.bold and not self._requirements['general']['bold_allowed']:
+                self.errors_list.append(
+                f"Bold Allowed: paragraph {p_i}, expected {self._requirements['general']['bold_allowed']}, found True")
                 self._errors['general']['bold_allowed'].append({"paragraph": p_i,
                                                                 "run": j,
                                                                 "expected": self._requirements['general'][
@@ -226,6 +232,8 @@ class Validator(object):
                     run.bold = False
                     bold_changes += 1
             if run.underline and not self._requirements['general']['underlined_allowed']:
+                self.errors_list.append(
+                f"Underlined Allowed: paragraph {p_i}, expected {self._requirements['general']['underlined_allowed']}, found True")
                 self._errors['general']['underlined_allowed'].append({"paragraph": p_i,
                                                                       "run": j,
                                                                       "expected": self._requirements['general'][
@@ -248,6 +256,8 @@ class Validator(object):
             return
         if not self._requirements['general']['double_space_allowed']:
             if "  " in text:
+                self.errors_list.append(
+                f"Double Space Allowed: paragraph {p_i}, expected {self._requirements['general']['double_space_allowed']}, found True")
                 self._errors['general']['double_space_allowed'].append({"paragraph": p_i,
                                                                         "expected": self._requirements['general'][
                                                                             'double_space_allowed'],
@@ -265,11 +275,15 @@ class Validator(object):
         cnt = 0
         if not self._requirements['general']['size_min'] is None:
             if cnt < self._requirements['general']['size_min']:
+                self.errors_list.append(
+                f"Size Min: expected {self._requirements['general']['size_min']}, found {cnt}")
                 self._errors['general']['size_min'].append({"expected": self._requirements['general']['size_min'],
                                                             "found": cnt
                                                             })
         if not self._requirements['general']['size_max'] is None:
             if cnt > self._requirements['general']['size_max']:
+                self.errors_list.append(
+                f"Size Max: expected {self._requirements['general']['size_max']}, found {cnt}")
                 self._errors['general']['size_max'].append({"expected": self._requirements['general']['size_max'],
                                                             "found": cnt
                                                             })
@@ -295,12 +309,16 @@ class Validator(object):
         for i, section in enumerate(self._docx.iter_sections()):
             if section.start_type == WD_SECTION_START.NEW_COLUMN:
                 if not self._requirements['general']['columns']:
+                    self.errors_list.append(
+                f"Columns: section {i}, expected {self._requirements['general']['columns']}, found True")
                     self._errors['general']['columns'].append({"section": i,
                                                                "expected": self._requirements['general']['columns'],
                                                                "found": True
                                                                })
             else:
                 if self._requirements['general']['columns']:
+                    self.errors_list.append(
+                f"Columns: section {i}, expected {self._requirements['general']['columns']}, found False")
                     self._errors['general']['columns'].append({"section": i,
                                                                "expected": self._requirements['general']['columns'],
                                                                "found": False
@@ -311,17 +329,22 @@ class Validator(object):
         if not self._requirements['images']['num_min'] is None \
                 and not self._requirements['images']['num_max'] is None:
             if self._requirements['images']['num_min'] > self._requirements['images']['num_max']:
+                self.errors_list.append(f"Image Number: Minimal image number {self._requirements['images']['num_min']} "
+                                                    f"is bigger than maximal number "
+                                                    f"{self._requirements['images']['num_max']}")
                 self._errors["requirements"].append(f"Minimal image number {self._requirements['images']['num_min']} "
                                                     f"is bigger than maximal number "
                                                     f"{self._requirements['images']['num_max']}")
                 return
         if not self._requirements['images']['num_min'] is None:
             if len(images) < self._requirements['images']['num_min']:
+                self.errors_list.append(f"Min Num Images: Min {self._requirements['images']['num_min']}, found {len(images)}")
                 self._errors['images']['num_min'].append({"num_min": self._requirements['images']['num_min'],
                                                           "found": len(images)
                                                           })
         if not self._requirements['images']['num_max'] is None:
             if len(images) > self._requirements['images']['num_max']:
+                self.errors_list.append(f"Max Num Images: Max {self._requirements['images']['num_max']}, found {len(images)}")
                 self._errors['images']['num_max'].append({"num_max": self._requirements['images']['num_max'],
                                                           "found": len(images)
                                                           })
@@ -331,6 +354,7 @@ class Validator(object):
         if self._requirements['images']['width_max'] is None:
             return
         if image.width.cm > self._requirements['images']['width_max']:
+            self.errors_list.append(f"Images Max Width: image {i}, Max Width {self._requirements['images']['width_max']}, found {image.width.cm}")
             self._errors['images']['width_max'].append({"image": i,
                                                         "width_max": self._requirements['images']['width_max'],
                                                         "found": image.width.cm
@@ -345,6 +369,7 @@ class Validator(object):
             return
         if image.info["dpi"][0] < self._requirements['images']["dpi_min"] or \
                 image.info["dpi"][1] < self._requirements['images']["dpi_min"]:
+            self.errors_list.append(f"Images Dpi Width: image {i}, Dpi Min {self._requirements['images']['dpi_min']}, found {image.info['dpi']}")
             self._errors['images']['dpi_min'].append({"image": i,
                                                       "dpi_min": self._requirements['images']['dpi_min'],
                                                       "found": image.info["dpi"]
@@ -356,6 +381,8 @@ class Validator(object):
         ok = True
         for i, image in enumerate(images):
             if image.mode not in ["L", "P"]:
+                self.errors_list.append(f"Images Color Allowed: image {i},"
+                                        f" Allowed {self._requirements['images']['color_allowed']}, found True")
                 self._errors['images']['color_allowed'].append({"image": i,
                                                                 "color_allowed": self._requirements['images'][
                                                                     'color_allowed'],
@@ -367,6 +394,8 @@ class Validator(object):
                 self._docx.grayscale_images()
 
     def _check_image_link(self, count):
+        if not self._requirements["images"]["links_required"]:
+            return
         for j in range(1, count):
             for i, paragraph in enumerate(self._docx.iter_paragraphs()):
                 if f"Рисунок {j}" in paragraph.text:
@@ -388,6 +417,8 @@ class Validator(object):
                             self._warnings["images"]["links"].append(f"Image {j} linked in paragraph {found_i} "
                                                                      f"before definition in paragraph {i}")
                     else:
+                        self.errors_list.append(f"Links Required: Image {j} defined in paragraph {i}"
+                                                                        f" haven't linked")
                         self._errors["images"]["links_required"].append(f"Image {j} defined in paragraph {i}"
                                                                         f" haven't linked")
 
@@ -441,11 +472,13 @@ class Validator(object):
             cnt /= 2.0
         if not self._requirements['keywords']['num_min'] is None:
             if cnt < self._requirements['keywords']['num_min']:
+                self.errors_list.append(f"Keyword Min Num: Min Num {self._requirements['keywords']['num_min']}, found {cnt}")
                 self._errors['keywords']['num_min'].append({"num_min": self._requirements['keywords']['num_min'],
                                                             "found": cnt
                                                             })
         if not self._requirements['keywords']['num_max'] is None:
             if cnt > self._requirements['keywords']['num_max']:
+                self.errors_list.append(f"Keyword Max Num: Max Num {self._requirements['keywords']['num_max']}, found {cnt}")
                 self._errors['keywords']['num_max'].append({"num_max": self._requirements['keywords']['num_max'],
                                                             "found": cnt
                                                             })
@@ -455,6 +488,7 @@ class Validator(object):
             for i, w in enumerate(keywords):
                 lang = detect(w.encode('cp1251'))["language"]
                 if lang == "Russian":
+                    self.errors_list.append(f"Keyword English: English {self._requirements['keywords']['english']}, word {w}")
                     self._errors["keywords"]["english"].append({
                         "english": self._requirements["keywords"]["english"],
                         "found": w
@@ -463,6 +497,7 @@ class Validator(object):
         elif self._requirements["keywords"]["english"] == "no":
             for i, w in enumerate(keywords):
                 if not re.match(r"[A-Za-z]+", w) is None:
+                    self.errors_list.append(f"Keyword English: English {self._requirements['keywords']['english']}, word {w}")
                     self._errors["keywords"]["english"].append({
                         "english": self._requirements["keywords"]["english"],
                         "found": w
@@ -479,6 +514,7 @@ class Validator(object):
                 else:
                     eng_num += 1
             if not eng_num == rus_num:
+                self.errors_list.append(f"Keyword English: English {self._requirements['keywords']['english']}, eng_num {eng_num}, rus_num {rus_num}")
                 self._errors["keywords"]["english"].append({
                     "english": self._requirements["keywords"]["english"],
                     "eng_num": eng_num,
@@ -506,6 +542,7 @@ class Validator(object):
         # print(words)
         if len(words) == 0:
             if self._requirements["keywords"]["required"]:
+                self.errors_list.append(f"Keyword Required: Required {self._requirements['keywords']['required']}, found False")
                 self._errors["keywords"]["required"].append({"required": self._requirements['keywords']['required'],
                                                              "found": False
                                                              })
@@ -553,6 +590,7 @@ class Validator(object):
             if found_udc:
                 break
         if not found_udc:
+            self.errors_list.append(f"UDC: not found but required")
             self._errors["UDC"].append("UDC not found but required")
 
     def validate_literature(self):
@@ -560,10 +598,10 @@ class Validator(object):
 
     def result(self):
         if self._make_changes:
-            grayscale_image_num = self._docx.save_as("out/result.docx")
+            grayscale_image_num = self._docx.save_as("out/_result.docx")
             self._log.append(
                 f"Grayscale succeed on {grayscale_image_num} images from {len(self._docx.get_images_shapes())}")
-        return self._errors, self._log, self._warnings
+        return self._errors, self._log, self._warnings, self.errors_list
 
     def validate(self):
         self.validate_general_requirements()
@@ -571,3 +609,15 @@ class Validator(object):
         self.validate_tables_requirements()
         self.validate_keywords()
         self.validate_udc()
+
+
+class StructureValidator:
+
+    def __init__(self):
+        pass
+
+
+class ContentValidator:
+
+    def __init__(self):
+        pass

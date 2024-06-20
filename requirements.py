@@ -8,6 +8,8 @@ from nltk import sent_tokenize
 # USE nltk for sentence tokenization
 
 class Requirements:
+    # эвристики редактируются пользователем (map) Онтология: (__* - concept (экстенсионал), [...] - интенсионал) +  отношения
+    # визуализатор и редактор онтологии - табличный вид
     __recognized_fonts = ['Times New Roman',
                           'Calibri', 'Arial']
     __recognized_lit_templates = ['ГОСТ Р 7.0.100 -2018', 'ГОСТ Р 7.0.5 -2008', 'ГОСТ Р 7.0.5 --2008',
